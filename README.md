@@ -1,10 +1,14 @@
+cat > README.md <<'EOF'
+# KPT 2.3
+## AI Output Decision Governance Standard
+
 KPT 2.3 is a runtime decision-governance standard for AI candidate outputs.
 
 It classifies outputs before influence or execution, separates decision state from enforcement action, and requires auditable trace before execution-relevant effect.
 
 This repository contains the public standard layer of KPT 2.3: core documents, schemas, tests, examples, and selected reference materials.
-# KPT 2.3
-## AI Output Decision Governance Standard
+
+Reading, discussion, and implementation study are public. Official conformance claims, official status claims, certification claims, and controlled KPT name use are governed separately.
 
 Author: Kristjan Jõgi  
 Status: Technical checkpoint bundle; core standard at release-candidate maturity, schema-clean canonical outputs verified across included suites
@@ -16,12 +20,12 @@ Checkpoint verification in this bundle:
 
 Authority note:
 - Markdown and JSON sources are authoritative.
-- PDF-pack and legacy/origin materials are archival convenience artifacts.
+- Archival and convenience materials may exist outside this public repository assembly path.
 - The philosophical continuity note for this bundle is `docs/epistemic-humility-axiom.md`.
 
 Conformance note:
 - canonical decision and trace outputs in this bundle are validated against the canonical schemas
-- see `CONFORMANCE_REPORT.md` and `docs/document-authority-map.md`
+- see `VERIFICATION_REPORT.md` and `docs/document-authority-map.md`
 
 ---
 
@@ -32,12 +36,10 @@ KPT is a standard for **AI output decision governance**.
 Its core purpose is to ensure that an AI-generated candidate output is not treated as equivalent to a real-world action.
 
 KPT inserts a governance boundary between:
-
 - candidate output; and
 - downstream influence or execution.
 
 In practical terms, KPT is designed for systems where AI outputs may:
-
 - influence human decisions;
 - trigger tools or APIs;
 - modify files, records, or workflows;
@@ -67,7 +69,6 @@ This is the epistemic humility principle in practice: when grounding is weak, ad
 KPT evaluates a governed **candidate output** before downstream effect.
 
 A conformant KPT-style runtime should:
-
 1. receive a candidate output;
 2. determine the governed context;
 3. evaluate safety and epistemic sufficiency;
@@ -97,7 +98,6 @@ KPT 2.3 defines four decision states:
 - `refuse_help` = the candidate output is disallowed as assistance
 
 Important distinction:
-
 - `decision_state` = what the output is
 - `enforcement_action` = what the system does because of that status
 
@@ -108,23 +108,19 @@ Important distinction:
 KPT 2.3 uses the following core dimensions.
 
 ### Zones
-
 - `critical`
 - `analytical`
 - `creative`
 
 ### Profiles
-
 - `KPT-H`
 - `KPT-A`
 
 ### Deployment modes
-
 - `General`
 - `High-Assurance`
 
 ### Locked distinctions
-
 - zone = governed context
 - profile = output target context
 - deployment_mode = assurance posture
@@ -140,7 +136,6 @@ KPT trace is not only a log.
 A KPT trace is an auditable governance record for one evaluated candidate output.
 
 The trace layer exists to preserve:
-
 - what was evaluated;
 - what governed context applied;
 - what decision state was assigned;
@@ -151,7 +146,6 @@ The trace layer exists to preserve:
 - whether trace existed before execution.
 
 Locked trace rules include:
-
 - one trace per evaluated candidate output;
 - blocked candidate plus replacement = two traces;
 - execution-relevant outputs must be traced before execution;
@@ -161,11 +155,9 @@ Locked trace rules include:
 
 ## 7. Repository purpose
 
-This repository is intended to hold the KPT 2.3 standard and its supporting implementation-oriented artifacts.
+This repository is intended to hold the public standard layer of KPT 2.3 and its supporting implementation-oriented artifacts.
 
-The repo is not only for abstract specification.
 It is intended to support:
-
 - standard publication;
 - review and discussion;
 - conformance work;
@@ -180,9 +172,7 @@ It is intended to support:
 The repository is structured around several layers.
 
 ### A. Core standard layer
-
 Defines the standard itself:
-
 - core concepts
 - decision states
 - basis-code logic
@@ -190,44 +180,36 @@ Defines the standard itself:
 - conformance expectations
 
 ### B. Technical implementation layer
-
 Defines how KPT can be implemented in real systems:
-
 - reference middleware spec
 - evaluator pseudocode
 - implementation guidance
 - technical diagram specification
 
 ### C. Schema layer
-
 Defines the normalized objects used by the runtime:
-
 - evaluation payload schema
 - decision result schema
 - trace schema
 
 ### D. Guidance layer
-
 Clarifies areas where vague implementation would weaken the standard:
-
 - zone assignment guidance
 - rationale field guidance
 - trace stability and replay guidance
 - future human review / override guidance
 
 ### E. Licensing and control layer
-
 Defines how KPT materials, naming, and conformance claims may be used.
 
 ### F. Conformance and test layer
-
 Defines how an implementation can be evaluated against the standard.
 
 ---
 
 ## 9. Suggested repository structure
 
-```text
+~~~text
 KPT-2.3/
   README.md
   LICENSE.md
@@ -260,10 +242,7 @@ KPT-2.3/
   examples/
     trace-valid-example.json
     trace-invalid-example.json
-  handoff/
-    KPT_2_3_MASTER_HANDOFF.md
-    KPT_2_3_ORDER_AND_STRUCTURE_GUIDE.md
-```
+~~~
 
 This structure reflects both the standard layer and the implementation layer.
 
@@ -274,13 +253,11 @@ This structure reflects both the standard layer and the implementation layer.
 If you are new to KPT, read in this order.
 
 ### Path 1: Quick orientation
-
 1. `README.md`
-2. `handoff/KPT_2_3_ORDER_AND_STRUCTURE_GUIDE.md`
-3. `docs/core-standard.md`
+2. `docs/core-standard.md`
+3. `docs/quickstart.md`
 
 ### Path 2: Standard-focused read
-
 1. `docs/core-standard.md`
 2. `docs/trace-schema.md`
 3. `docs/basis-codes-registry.md`
@@ -288,7 +265,6 @@ If you are new to KPT, read in this order.
 5. `tests/minimum-testpack.yaml`
 
 ### Path 3: Technical implementation read
-
 1. `docs/reference-middleware-spec.md`
 2. `docs/reference-middleware-pseudocode.md`
 3. `schemas/evaluation-payload.schema.json`
@@ -298,7 +274,6 @@ If you are new to KPT, read in this order.
 7. `docs/technical-diagram-spec.md`
 
 ### Path 4: Clarification / hardening guidance
-
 1. `docs/zone-assignment-guidance.md`
 2. `docs/rationale-field-guidance.md`
 3. `docs/trace-stability-and-replay-guidance.md`
@@ -310,7 +285,6 @@ If you are new to KPT, read in this order.
 KPT 2.3 is currently at a strong release-candidate level in its core logic.
 
 ### Already drafted or created
-
 - core standard materials
 - trace schema logic
 - basis-code logic
@@ -321,11 +295,8 @@ KPT 2.3 is currently at a strong release-candidate level in its core logic.
 - evaluator pseudocode
 - core runtime schemas
 - multiple guidance documents
-- investor/commercial framing materials
-- PDF pack and signed archive state outside this repo assembly path
 
 ### Still being tightened
-
 - README final polish
 - zone assignment hardening
 - rationale field constraints
@@ -341,7 +312,6 @@ KPT 2.3 is currently at a strong release-candidate level in its core logic.
 The following points should be treated as locked unless explicitly revised.
 
 ### Core principles
-
 - decision before influence
 - decision before execution
 - output != action
@@ -350,7 +320,6 @@ The following points should be treated as locked unless explicitly revised.
 - weaponized form control
 
 ### Basis-code logic
-
 - `qualify` must include `EPI-UNCERTAIN`
 - `deliver` must use `EPI-SUFFICIENT` and no limitation or safety codes
 - `refuse_assert` must include `EPI-INSUFFICIENT`
@@ -358,7 +327,6 @@ The following points should be treated as locked unless explicitly revised.
 - safety precedence overrides epistemic sufficiency
 
 ### Trace logic
-
 - one trace per evaluated candidate output
 - blocked candidate plus replacement = two traces
 - trace before execution for execution-relevant outputs
@@ -370,7 +338,6 @@ The following points should be treated as locked unless explicitly revised.
 KPT 2.3 is currently intended to follow a **controlled-public** model rather than an unrestricted permissive release.
 
 High-level position:
-
 - public visibility: yes
 - non-commercial reading and discussion: yes
 - automatic commercial exploitation: no
@@ -378,7 +345,6 @@ High-level position:
 - official implementation or official status claims: separately controlled
 
 Repository-level files for this layer:
-
 - `LICENSE.md`
 - `LICENSING.md`
 - `CONFORMANCE_AND_NAME_USE.md`
@@ -391,7 +357,6 @@ KPT is not only a design vocabulary.
 It is intended to support conformance assessment.
 
 Conformance work in KPT 2.3 focuses on at least:
-
 - Decision Conformance
 - Enforcement Boundary Conformance
 - Trace Conformance
@@ -409,7 +374,6 @@ Its runtime behavior must actually preserve the required ordering and distinctio
 ## 15. What KPT is not claiming
 
 KPT does not claim to:
-
 - make AI automatically truthful;
 - replace domain expertise;
 - replace business authorization systems;
@@ -424,7 +388,6 @@ KPT governs admissibility of outputs before influence or execution.
 ## 16. Immediate next priorities
 
 The current recommended next priorities are:
-
 1. final README alignment;
 2. human review and override guidance;
 3. trace event family model;
@@ -442,3 +405,4 @@ KPT 2.3 is a runtime decision-governance standard that classifies AI candidate o
 ## 18. Author
 
 Kristjan Jõgi
+EOF
