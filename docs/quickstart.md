@@ -2,7 +2,7 @@
 ## Start Here in 10 Minutes
 
 Author: Kristjan Jõgi  
-Status: Draft  
+Status: Public quickstart guide for the KPT 2.3 technical checkpoint bundle  
 Applies to: KPT 2.3  
 Authority class: Normative minimum-contract guide
 
@@ -157,7 +157,7 @@ KPT uses:
 - `KPT-H`
 - `KPT-A`
 
-Profile controls output-handling caution posture.
+Profile classifies the output target context.
 
 ### Deployment mode
 KPT uses:

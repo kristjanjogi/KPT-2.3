@@ -3,8 +3,8 @@
 **Author:** Kristjan Jõgi  
 **Document date:** 2026-03-08
 
-**Version:** Working Draft v0.2  
-**Status:** Release Candidate Draft  
+**Version:** Technical checkpoint bundle  
+**Status:** Release-candidate maturity  
 **Positioning:** KPT is a standard for AI output decision governance.
 
 ## 0. Normative Language and Conformance
