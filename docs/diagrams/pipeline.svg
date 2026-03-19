@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="280" viewBox="0 0 1400 280" role="img" aria-labelledby="title desc">
+  <title id="title">KPT 2.3 Core Pipeline</title>
+  <desc id="desc">Candidate output flows through zone assignment, decision classification, enforcement determination, trace commit, and only then display or execution according to enforcement.</desc>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 14; ry: 14; }
+      .accent { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2; rx: 14; ry: 14; }
+      .trace { fill: #ecfeff; stroke: #0891b2; stroke-width: 2; rx: 14; ry: 14; }
+      .out { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 14; ry: 14; }
+      .text { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0f172a; }
+      .small { font-size: 15px; font-weight: 500; }
+      .label { font-size: 20px; font-weight: 700; }
+      .caption { font-size: 14px; fill: #475569; }
+      .arrow { stroke: #475569; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .title { font-size: 24px; font-weight: 800; }
+      .subtitle { font-size: 15px; fill: #475569; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#475569" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1400" height="280"/>
+  <text class="text title" x="40" y="40">KPT 2.3 core pipeline</text>
+  <text class="text subtitle" x="40" y="64">Decision, enforcement, and trace remain distinct; trace commit precedes display or execution.</text>
+
+  <rect class="box" x="40" y="110" width="180" height="90"/>
+  <text class="text label" x="130" y="148" text-anchor="middle">Candidate</text>
+  <text class="text label" x="130" y="173" text-anchor="middle">output</text>
+  <text class="text caption" x="130" y="194" text-anchor="middle">governed unit</text>
+
+  <rect class="box" x="270" y="110" width="200" height="90"/>
+  <text class="text label" x="370" y="145" text-anchor="middle">Assign zone</text>
+  <text class="text small" x="370" y="168" text-anchor="middle">+ policy context</text>
+  <text class="text caption" x="370" y="191" text-anchor="middle">ZAT, profile, mode</text>
+
+  <rect class="accent" x="520" y="110" width="220" height="90"/>
+  <text class="text label" x="630" y="145" text-anchor="middle">Classify</text>
+  <text class="text label" x="630" y="170" text-anchor="middle">decision state</text>
+  <text class="text caption" x="630" y="193" text-anchor="middle">grounded by basis codes</text>
+
+  <rect class="accent" x="790" y="110" width="220" height="90"/>
+  <text class="text label" x="900" y="145" text-anchor="middle">Determine</text>
+  <text class="text label" x="900" y="170" text-anchor="middle">enforcement</text>
+  <text class="text caption" x="900" y="193" text-anchor="middle">display / block / verify</text>
+
+  <rect class="trace" x="1060" y="110" width="220" height="90"/>
+  <text class="text label" x="1170" y="145" text-anchor="middle">Build + commit</text>
+  <text class="text label" x="1170" y="170" text-anchor="middle">trace</text>
+  <text class="text caption" x="1170" y="193" text-anchor="middle">before display or execution</text>
+
+  <path class="arrow" d="M220 155 H270"/>
+  <path class="arrow" d="M470 155 H520"/>
+  <path class="arrow" d="M740 155 H790"/>
+  <path class="arrow" d="M1010 155 H1060"/>
+
+  <rect class="out" x="1130" y="220" width="120" height="40"/>
+  <text class="text small" x="1190" y="244" text-anchor="middle">Display / execute</text>
+  <path class="arrow" d="M1170 200 V220"/>
+</svg>

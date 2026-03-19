@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kpt.dev/schemas/evaluation-payload.schema.json",
+  "title": "KPT Evaluation Payload",
+  "description": "Normalized input payload for KPT middleware candidate-output evaluation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "input_ref",
+    "output_ref",
+    "candidate_output",
+    "context",
+    "provenance",
+    "policy"
+  ],
+  "properties": {
+    "input_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reference to the originating prompt, request, event, or upstream input object."
+    },
+    "output_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reference to the candidate output object being evaluated."
+    },
+    "candidate_output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content",
+        "content_type"
+      ],
+      "properties": {
+        "content": {
+          "description": "Raw candidate content or structured candidate object.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object"
+            },
+            {
+              "type": "array"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content_type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "json",
+            "tool_call",
+            "mixed"
+          ],
+          "description": "Declared content type of the candidate output."
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "zone",
+        "profile",
+        "deployment_mode",
+        "execution_relevant",
+        "user_visible",
+        "downstream_target"
+      ],
+      "properties": {
+        "zone": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "analytical",
+            "creative"
+          ],
+          "description": "Governed context classification."
+        },
+        "profile": {
+          "type": "string",
+          "enum": [
+            "KPT-H",
+            "KPT-A"
+          ],
+          "description": "Output target context."
+        },
+        "deployment_mode": {
+          "type": "string",
+          "enum": [
+            "General",
+            "High-Assurance"
+          ],
+          "description": "Declared assurance posture for this evaluation."
+        },
+        "execution_relevant": {
+          "type": "boolean",
+          "description": "Whether the candidate output may influence or trigger downstream execution."
+        },
+        "user_visible": {
+          "type": "boolean",
+          "description": "Whether the candidate output is intended for display to the user."
+        },
+        "downstream_target": {
+          "type": "string",
+          "enum": [
+            "display",
+            "tool",
+            "api",
+            "file",
+            "mixed"
+          ],
+          "description": "Primary downstream destination of the candidate output."
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_basis",
+        "verification_state",
+        "time_sensitivity"
+      ],
+      "properties": {
+        "source_basis": {
+          "type": "array",
+          "description": "Declared source basis for the candidate output.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "user input",
+              "retrieved sources",
+              "model synthesis"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "verification_state": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "partially_verified",
+            "unverified",
+            "not_applicable"
+          ],
+          "description": "Declared verification state relevant to admissibility."
+        },
+        "time_sensitivity": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "description": "Declared currentness sensitivity of the candidate output."
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_version",
+        "engine_version"
+      ],
+      "properties": {
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Pinned KPT policy version used for evaluation."
+        },
+        "engine_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Evaluator or middleware engine version."
+        }
+      }
+    }
+  }
+}

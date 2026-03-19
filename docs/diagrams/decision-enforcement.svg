@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520" role="img" aria-labelledby="title desc">
+  <title id="title">Decision and enforcement</title>
+  <desc id="desc">Four KPT decision states mapped to baseline enforcement outcomes.</desc>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .left { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2; rx: 14; ry: 14; }
+      .right { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 14; ry: 14; }
+      .text { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0f172a; }
+      .title { font-size: 24px; font-weight: 800; }
+      .subtitle { font-size: 15px; fill: #475569; }
+      .decision { font-size: 22px; font-weight: 800; }
+      .body { font-size: 16px; }
+      .caption { font-size: 14px; fill: #475569; }
+      .arrow { stroke: #475569; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .heading { font-size: 18px; font-weight: 700; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#475569" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1400" height="520"/>
+  <text class="text title" x="40" y="40">Decision state vs enforcement baseline</text>
+  <text class="text subtitle" x="40" y="64">Decision state answers what the output is; enforcement answers what the system does because of that status.</text>
+
+  <text class="text heading" x="120" y="100">Decision state</text>
+  <text class="text heading" x="760" y="100">Baseline enforcement</text>
+
+  <!-- deliver -->
+  <rect class="left" x="40" y="120" width="340" height="80"/>
+  <text class="text decision" x="210" y="160" text-anchor="middle">deliver</text>
+  <text class="text caption" x="210" y="183" text-anchor="middle">sufficiently supported for bounded delivery</text>
+  <path class="arrow" d="M380 160 H430"/>
+  <rect class="right" x="430" y="120" width="890" height="80"/>
+  <text class="text body" x="455" y="152">display = allow</text>
+  <text class="text body" x="455" y="176">execution = allow or not_applicable (baseline)</text>
+
+  <!-- qualify -->
+  <rect class="left" x="40" y="220" width="340" height="80"/>
+  <text class="text decision" x="210" y="260" text-anchor="middle">qualify</text>
+  <text class="text caption" x="210" y="283" text-anchor="middle">useful only with explicit qualification</text>
+  <path class="arrow" d="M380 260 H430"/>
+  <rect class="right" x="430" y="220" width="890" height="80"/>
+  <text class="text body" x="455" y="252">display = allow_with_qualification</text>
+  <text class="text body" x="455" y="276">execution-relevant output stays blocked until required verification is satisfied</text>
+
+  <!-- refuse_assert -->
+  <rect class="left" x="40" y="320" width="340" height="80"/>
+  <text class="text decision" x="210" y="360" text-anchor="middle">refuse_assert</text>
+  <text class="text caption" x="210" y="383" text-anchor="middle">insufficiently supported for assertion</text>
+  <path class="arrow" d="M380 360 H430"/>
+  <rect class="right" x="430" y="320" width="890" height="80"/>
+  <text class="text body" x="455" y="352">display = block_original for the refused candidate output</text>
+  <text class="text body" x="455" y="376">execution = block or not_applicable; stronger reliance still requires verification</text>
+
+  <!-- refuse_help -->
+  <rect class="left" x="40" y="420" width="340" height="80"/>
+  <text class="text decision" x="210" y="460" text-anchor="middle">refuse_help</text>
+  <text class="text caption" x="210" y="483" text-anchor="middle">disallowed to provide</text>
+  <path class="arrow" d="M380 460 H430"/>
+  <rect class="right" x="430" y="420" width="890" height="80"/>
+  <text class="text body" x="455" y="452">display = block_original for the refused candidate output</text>
+  <text class="text body" x="455" y="476">execution = block or not_applicable; any safe alternative is a separately evaluated new trace</text>
+</svg>

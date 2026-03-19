@@ -1,0 +1,25 @@
+{
+  "trace_id": "trace_001",
+  "timestamp": "2026-03-11T12:00:00Z",
+  "input_ref": "req:chat:2026-03-11:0001",
+  "output_ref": "out:chat:2026-03-11:0001",
+  "zone": "critical",
+  "profile": "KPT-A",
+  "deployment_mode": "High-Assurance",
+  "decision_state": "qualify",
+  "basis_codes": [
+    "EPI-UNCERTAIN",
+    "VER-REQUIRED"
+  ],
+  "rationale": "Execution-relevant recommendation requires stronger verification before action.",
+  "qualification_type": "verification_required",
+  "execution_relevance": true,
+  "enforcement_action": {
+    "display": "allow_with_qualification",
+    "execution": "block"
+  },
+  "policy_version": "kpt-2.3-policy-ha-0.2",
+  "engine_version": "kpt-evaluator-0.2.0",
+  "previous_trace_hash": "23af0cdfa9cd924421e4ee8f475e32f9ec30b3f57bfd739ab180d1cd7da6bc91",
+  "integrity_hash": "6ad87bd0c2ec5656fbbe043d3b37efa50b553a0d83137dfdb83860f937b8a8de"
+}

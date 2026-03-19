@@ -1,0 +1,289 @@
+"""
+KPT Reference Engine v0.1
+run_demo.py pseudocode
+
+Purpose:
+- load canonical demo cases
+- run each case through the reference engine
+- emit decisions and traces
+- compare actual vs expected results
+- produce a simple pass/fail report
+
+This is pseudocode-oriented Python, not production code.
+"""
+
+from pathlib import Path
+from typing import Any
+
+# Intended module boundaries
+# from engine import evaluate_candidate, evaluate_with_optional_replacement
+# from trace import write_trace_artifact
+# from enforcement import apply_route_outcome
+
+
+OUTPUT_ROOT = Path("reference-engine/outputs")
+TRACES_DIR = OUTPUT_ROOT / "traces"
+DECISIONS_DIR = OUTPUT_ROOT / "decisions"
+REPORTS_DIR = OUTPUT_ROOT / "reports"
+
+
+def ensure_output_dirs() -> None:
+    """Create output directories if missing."""
+    for path in [TRACES_DIR, DECISIONS_DIR, REPORTS_DIR]:
+        path.mkdir(parents=True, exist_ok=True)
+
+
+def load_demo_cases(path: str) -> dict[str, Any]:
+    """
+    Load canonical demo cases from YAML.
+
+    Expected top-level shape:
+    - version
+    - engine_version
+    - policy_version
+    - cases
+    """
+    # pseudocode:
+    # with open(path, "r", encoding="utf-8") as f:
+    #     return yaml.safe_load(f)
+    raise NotImplementedError
+
+
+def normalize_case_to_engine_input(case: dict[str, Any], meta: dict[str, Any]) -> dict[str, Any]:
+    """
+    Convert a demo case into the engine evaluation payload shape.
+
+    v0.1 rule:
+    - core schema stays stable
+    - demo extensions may be passed through under a demo-only namespace
+    """
+    return {
+        "input_ref": case["input_ref"],
+        "output_ref": case["output_ref"],
+        "candidate_output": {
+            "content": case["candidate_output"]["content"],
+            "content_type": case["candidate_output"]["content_type"],
+            # demo extension fields may be retained separately
+            "candidate_id": case["candidate_output"].get("candidate_id"),
+            "parent_candidate_id": case["candidate_output"].get("parent_candidate_id"),
+        },
+        "context": {
+            "zone": case["context"]["zone"],
+            "profile": case["context"]["profile"],
+            "deployment_mode": case["context"]["deployment_mode"],
+            "execution_relevant": case["context"]["execution_relevant"],
+            "user_visible": case["context"]["user_visible"],
+            "downstream_target": case["context"]["downstream_target"],
+            "route_type": case["route_type"],  # demo extension
+        },
+        "provenance": case.get("provenance", {}),
+        "policy": {
+            "policy_version": meta["policy_version"],
+            "engine_version": meta["engine_version"],
+        },
+        "report_layer_extensions": {
+            "case_id": case["case_id"],
+            "title": case.get("title"),
+            "safe_replacement": case.get("policy", {}).get("safe_replacement"),
+            "allow_safe_replacement": case.get("policy", {}).get("allow_safe_replacement", False),
+        },
+    }
+
+
+def run_engine_for_case(case_payload: dict[str, Any]) -> dict[str, Any]:
+    """
+    Run one case through the engine.
+
+    Two possible paths:
+    - single-result path
+    - dual-trace replacement path
+    """
+    # pseudocode:
+    # if case_payload["report_layer_extensions"]["allow_safe_replacement"]:
+    #     return evaluate_with_optional_replacement(case_payload)
+    # return evaluate_candidate(case_payload)
+    raise NotImplementedError
+
+
+def flatten_results(engine_result: dict[str, Any]) -> dict[str, Any]:
+    """
+    Normalize engine output into a stable comparison shape.
+
+    Expected normalized shape:
+    - primary_decision
+    - primary_trace
+    - replacement_decision (optional)
+    - replacement_trace (optional)
+    - trace_count
+    - final_display_outcome
+    - final_execution_outcome
+    """
+    # pseudocode:
+    # if "original_result" in engine_result and "replacement_result" in engine_result:
+    #     ...
+    # else:
+    #     ...
+    raise NotImplementedError
+
+
+def minimum_basis_codes_satisfied(actual_codes: list[str], expected_codes: list[str]) -> bool:
+    """
+    v0.1 rule:
+    expected basis codes are minimum required basis codes,
+    not necessarily the only allowed codes.
+    """
+    return set(expected_codes).issubset(set(actual_codes))
+
+
+def enforcement_matches(actual: dict[str, Any], expected: dict[str, Any]) -> bool:
+    """Compare enforcement outcome against expected enforcement contract."""
+    required_keys = [
+        "display_allowed",
+        "display_mode",
+        "execution_allowed",
+        "execution_mode",
+        "replacement_required",
+    ]
+    for key in required_keys:
+        if actual.get(key) != expected.get(key):
+            return False
+    return True
+
+
+def compare_case_result(case: dict[str, Any], actual: dict[str, Any]) -> dict[str, Any]:
+    """
+    Compare actual engine output to the canonical case contract.
+
+    Must verify at minimum:
+    - decision_state
+    - minimum basis codes
+    - qualification_type
+    - enforcement outcome
+    - trace_count
+    """
+    expected = case["expected"]
+
+    actual_primary = actual["primary_decision"]
+    actual_trace_count = actual["trace_count"]
+    actual_enforcement = actual["final_enforcement"]
+
+    checks = {
+        "decision_state_match": actual_primary["decision_state"] == expected["decision_state"],
+        "basis_codes_match": minimum_basis_codes_satisfied(
+            actual_primary.get("basis_codes", []),
+            expected.get("basis_codes", []),
+        ),
+        "qualification_type_match": actual_primary.get("qualification_type") == expected.get("qualification_type"),
+        "enforcement_match": enforcement_matches(actual_enforcement, expected["enforcement"]),
+        "trace_count_match": actual_trace_count == expected["trace_count"],
+    }
+
+    return {
+        "case_id": case["case_id"],
+        "title": case.get("title"),
+        "checks": checks,
+        "passed": all(checks.values()),
+        "expected": expected,
+        "actual_summary": {
+            "decision_state": actual_primary.get("decision_state"),
+            "basis_codes": actual_primary.get("basis_codes", []),
+            "qualification_type": actual_primary.get("qualification_type"),
+            "trace_count": actual_trace_count,
+            "enforcement": actual_enforcement,
+        },
+    }
+
+
+def write_case_outputs(case: dict[str, Any], flattened: dict[str, Any], comparison: dict[str, Any]) -> None:
+    """
+    Write per-case artifacts.
+
+    Expected outputs:
+    - decision JSON
+    - trace JSON(s)
+    - comparison JSON
+    """
+    case_id = case["case_id"]
+
+    # pseudocode:
+    # write_json(DECISIONS_DIR / f"{case_id}.decision.json", flattened["primary_decision"])
+    # write_json(TRACES_DIR / f"{case_id}.trace.json", flattened["primary_trace"])
+    # if flattened.get("replacement_trace"):
+    #     write_json(TRACES_DIR / f"{case_id}.replacement.trace.json", flattened["replacement_trace"])
+    # write_json(REPORTS_DIR / f"{case_id}.comparison.json", comparison)
+    raise NotImplementedError
+
+
+def build_summary_report(results: list[dict[str, Any]]) -> dict[str, Any]:
+    """Produce overall demo summary."""
+    total = len(results)
+    passed = sum(1 for r in results if r["passed"])
+    failed = total - passed
+
+    return {
+        "total_cases": total,
+        "passed_cases": passed,
+        "failed_cases": failed,
+        "failed_case_ids": [r["case_id"] for r in results if not r["passed"]],
+        "results": results,
+    }
+
+
+def print_console_summary(summary: dict[str, Any]) -> None:
+    """Human-readable console output for the demo run."""
+    print("KPT Reference Engine v0.1 Demo")
+    print(f"Total cases:  {summary['total_cases']}")
+    print(f"Passed cases: {summary['passed_cases']}")
+    print(f"Failed cases: {summary['failed_cases']}")
+
+    if summary["failed_case_ids"]:
+        print("Failed case IDs:")
+        for case_id in summary["failed_case_ids"]:
+            print(f" - {case_id}")
+
+
+def main() -> int:
+    """
+    Full demo runner order.
+
+    Locked v0.1 order:
+    1. prepare output directories
+    2. load canonical demo cases
+    3. normalize each case into engine input
+    4. run engine
+    5. flatten outputs
+    6. compare expected vs actual
+    7. write artifacts
+    8. write summary report
+    9. print console summary
+    10. return pass/fail exit code
+    """
+    ensure_output_dirs()
+
+    demo = load_demo_cases("reference-engine/demo_cases.yaml")
+    meta = {
+        "engine_version": demo["engine_version"],
+        "policy_version": demo["policy_version"],
+    }
+
+    results = []
+
+    for case in demo["cases"]:
+        case_payload = normalize_case_to_engine_input(case, meta)
+        engine_result = run_engine_for_case(case_payload)
+        flattened = flatten_results(engine_result)
+        comparison = compare_case_result(case, flattened)
+        write_case_outputs(case, flattened, comparison)
+        results.append(comparison)
+
+    summary = build_summary_report(results)
+
+    # pseudocode:
+    # write_json(REPORTS_DIR / "summary.json", summary)
+    print_console_summary(summary)
+
+    return 0 if summary["failed_cases"] == 0 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

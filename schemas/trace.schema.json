@@ -1,0 +1,388 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kpt.dev/schemas/trace.schema.json",
+  "title": "KPT Trace Object",
+  "description": "Auditable trace object for one evaluated candidate output in KPT 2.3.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trace_id",
+    "timestamp",
+    "input_ref",
+    "output_ref",
+    "zone",
+    "decision_state",
+    "basis_codes",
+    "rationale",
+    "qualification_type",
+    "execution_relevance",
+    "enforcement_action",
+    "policy_version",
+    "engine_version",
+    "previous_trace_hash",
+    "integrity_hash"
+  ],
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this evaluated candidate output trace."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1,
+      "description": "Trace creation timestamp in ISO 8601 format."
+    },
+    "input_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reference to the originating prompt, request, event, or upstream input object."
+    },
+    "output_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reference to the evaluated candidate output object."
+    },
+    "zone": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "analytical",
+        "creative"
+      ],
+      "description": "Governed context classification."
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "KPT-H",
+        "KPT-A"
+      ],
+      "description": "Output target context."
+    },
+    "deployment_mode": {
+      "type": "string",
+      "enum": [
+        "General",
+        "High-Assurance"
+      ],
+      "description": "Declared assurance posture for this evaluation."
+    },
+    "decision_state": {
+      "type": "string",
+      "enum": [
+        "deliver",
+        "qualify",
+        "refuse_assert",
+        "refuse_help"
+      ],
+      "description": "Assigned KPT decision state for the evaluated candidate output."
+    },
+    "basis_codes": {
+      "type": "array",
+      "description": "Basis codes supporting the assigned decision state.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Concise audit justification for the decision. Must not contain chain-of-thought."
+    },
+    "qualification_type": {
+      "description": "Required for qualify; otherwise null.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "uncertainty",
+            "time_sensitive",
+            "source_limited",
+            "scope_limited",
+            "verification_required",
+            "mixed"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "execution_relevance": {
+      "type": "boolean",
+      "description": "Whether the evaluated candidate output was execution-relevant."
+    },
+    "enforcement_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "display",
+        "execution"
+      ],
+      "properties": {
+        "display": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "allow_with_qualification",
+            "block_original"
+          ],
+          "description": "Display treatment for the evaluated candidate output."
+        },
+        "execution": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "block",
+            "not_applicable"
+          ],
+          "description": "Execution treatment for the evaluated candidate output."
+        }
+      }
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Pinned KPT policy version used for the evaluation."
+    },
+    "engine_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Evaluator or middleware engine version."
+    },
+    "previous_trace_hash": {
+      "description": "Hash pointer to previous trace in append-only or tamper-evident chain. Null is allowed only for a genesis record.",
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "integrity_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Integrity hash for this trace object."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision_state": {
+            "const": "qualify"
+          }
+        },
+        "required": [
+          "decision_state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "basis_codes": {
+            "contains": {
+              "const": "EPI-UNCERTAIN"
+            }
+          },
+          "qualification_type": {
+            "type": "string",
+            "enum": [
+              "uncertainty",
+              "time_sensitive",
+              "source_limited",
+              "scope_limited",
+              "verification_required",
+              "mixed"
+            ]
+          },
+          "enforcement_action": {
+            "properties": {
+              "display": {
+                "const": "allow_with_qualification"
+              },
+              "execution": {
+                "enum": [
+                  "block",
+                  "not_applicable"
+                ]
+              }
+            },
+            "required": [
+              "display",
+              "execution"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision_state": {
+            "const": "deliver"
+          }
+        },
+        "required": [
+          "decision_state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "basis_codes": {
+            "contains": {
+              "const": "EPI-SUFFICIENT"
+            },
+            "not": {
+              "contains": {
+                "enum": [
+                  "EPI-UNCERTAIN",
+                  "EPI-INSUFFICIENT",
+                  "SAFE-DISALLOWED-HELP",
+                  "WF-WEAPONIZED-FORM",
+                  "SRC-UNVERIFIED",
+                  "SRC-NO-PRIMARY",
+                  "SRC-CONFLICT",
+                  "TMP-TIME-SENSITIVE",
+                  "SCP-SCOPE-LIMITED",
+                  "VER-REQUIRED"
+                ]
+              }
+            }
+          },
+          "qualification_type": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision_state": {
+            "const": "refuse_assert"
+          }
+        },
+        "required": [
+          "decision_state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "basis_codes": {
+            "contains": {
+              "const": "EPI-INSUFFICIENT"
+            }
+          },
+          "qualification_type": {
+            "type": "null"
+          },
+          "enforcement_action": {
+            "properties": {
+              "display": {
+                "const": "block_original"
+              },
+              "execution": {
+                "enum": [
+                  "block",
+                  "not_applicable"
+                ]
+              }
+            },
+            "required": [
+              "display",
+              "execution"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision_state": {
+            "const": "refuse_help"
+          }
+        },
+        "required": [
+          "decision_state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "basis_codes": {
+            "anyOf": [
+              {
+                "contains": {
+                  "const": "SAFE-DISALLOWED-HELP"
+                }
+              },
+              {
+                "contains": {
+                  "const": "WF-WEAPONIZED-FORM"
+                }
+              }
+            ]
+          },
+          "qualification_type": {
+            "type": "null"
+          },
+          "enforcement_action": {
+            "properties": {
+              "display": {
+                "const": "block_original"
+              },
+              "execution": {
+                "enum": [
+                  "block",
+                  "not_applicable"
+                ]
+              }
+            },
+            "required": [
+              "display",
+              "execution"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "execution_relevance": {
+            "const": true
+          },
+          "enforcement_action": {
+            "properties": {
+              "execution": {
+                "const": "allow"
+              }
+            },
+            "required": [
+              "execution"
+            ]
+          }
+        },
+        "required": [
+          "execution_relevance",
+          "enforcement_action"
+        ]
+      },
+      "then": {
+        "properties": {
+          "decision_state": {
+            "const": "deliver"
+          }
+        }
+      }
+    }
+  ]
+}
