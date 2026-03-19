@@ -1,4 +1,3 @@
-cat > README.md <<'EOF'
 # KPT 2.3
 ## AI Output Decision Governance Standard
 
@@ -253,30 +252,30 @@ This structure reflects both the standard layer and the implementation layer.
 If you are new to KPT, read in this order.
 
 ### Path 1: Quick orientation
-1. `README.md`
-2. `docs/core-standard.md`
-3. `docs/quickstart.md`
+1. [README.md](README.md)
+2. [docs/core-standard.md](docs/core-standard.md)
+3. [docs/quickstart.md](docs/quickstart.md)
 
 ### Path 2: Standard-focused read
-1. `docs/core-standard.md`
-2. `docs/trace-schema.md`
-3. `docs/basis-codes-registry.md`
-4. `docs/conformance-methodology.md`
-5. `tests/minimum-testpack.yaml`
+1. [docs/core-standard.md](docs/core-standard.md)
+2. [docs/trace-schema.md](docs/trace-schema.md)
+3. [docs/basis-codes-registry.md](docs/basis-codes-registry.md)
+4. [docs/conformance-methodology.md](docs/conformance-methodology.md)
+5. [tests/minimum-testpack.yaml](tests/minimum-testpack.yaml)
 
 ### Path 3: Technical implementation read
-1. `docs/reference-middleware-spec.md`
-2. `docs/reference-middleware-pseudocode.md`
-3. `schemas/evaluation-payload.schema.json`
-4. `schemas/decision-result.schema.json`
-5. `schemas/trace.schema.json`
-6. `docs/implementation-guide.md`
-7. `docs/technical-diagram-spec.md`
+1. [docs/reference-middleware-spec.md](docs/reference-middleware-spec.md)
+2. [docs/reference-middleware-pseudocode.md](docs/reference-middleware-pseudocode.md)
+3. [schemas/evaluation-payload.schema.json](schemas/evaluation-payload.schema.json)
+4. [schemas/decision-result.schema.json](schemas/decision-result.schema.json)
+5. [schemas/trace.schema.json](schemas/trace.schema.json)
+6. [docs/implementation-guide.md](docs/implementation-guide.md)
+7. [docs/technical-diagram-spec.md](docs/technical-diagram-spec.md)
 
 ### Path 4: Clarification / hardening guidance
-1. `docs/zone-assignment-guidance.md`
-2. `docs/rationale-field-guidance.md`
-3. `docs/trace-stability-and-replay-guidance.md`
+1. [docs/zone-assignment-guidance.md](docs/zone-assignment-guidance.md)
+2. [docs/rationale-field-guidance.md](docs/rationale-field-guidance.md)
+3. [docs/trace-stability-and-replay-guidance.md](docs/trace-stability-and-replay-guidance.md)
 
 ---
 
@@ -405,4 +404,3 @@ KPT 2.3 is a runtime decision-governance standard that classifies AI candidate o
 ## 18. Author
 
 Kristjan Jõgi
-EOF
