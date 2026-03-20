@@ -281,28 +281,11 @@ If you are new to KPT, read in this order.
 
 ## 11. Current project status
 
-KPT 2.3 is currently at a strong release-candidate level in its core logic.
+KPT 2.3 is currently published as a public technical checkpoint.
 
-### Already drafted or created
-- core standard materials
-- trace schema logic
-- basis-code logic
-- conformance methodology
-- minimum testpack structure
-- licensing direction and draft texts
-- reference middleware specification
-- evaluator pseudocode
-- core runtime schemas
-- multiple guidance documents
+This repository contains the public standard layer, including core documents, schemas, tests, examples, and selected reference materials.
 
-### Still being tightened
-- README final polish
-- zone assignment hardening
-- rationale field constraints
-- trace stability and replay framing
-- human review and override guidance
-- trace event family model
-- final repository clean-up and packaging
+The core logic is at release-candidate maturity, while some guidance and packaging details may continue to be refined in later updates.
 
 ---
 
