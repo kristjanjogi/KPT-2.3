@@ -5,7 +5,7 @@ KPT 2.3 is a runtime decision-governance standard for AI candidate outputs.
 
 It classifies outputs before influence or execution, separates decision state from enforcement action, and requires auditable trace before execution-relevant effect.
 
-This repository contains the public standard layer of KPT 2.3: core documents, schemas, tests, examples, and selected reference materials.
+This repository is a hybrid public KPT 2.3 repository: it contains the public standard layer together with supporting tests, examples, and selected reference or implementation-oriented materials.
 
 Reading, discussion, and implementation study are public. Official conformance claims, official status claims, certification claims, and controlled KPT name use are governed separately.
 
