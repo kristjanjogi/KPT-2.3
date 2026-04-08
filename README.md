@@ -1,4 +1,14 @@
 # KPT 2.3
+
+> [!IMPORTANT]
+> **Public repo status**
+>
+> This repository is a **public standard / checkpoint surface** for KPT.
+> It is **not** the full internal development state, full Runtime Core working tree, or the complete commercial implementation surface.
+>
+> Public visibility does **not** grant automatic commercial use, official conformance claims, certification claims, or unrestricted KPT name use.
+> See **LICENSE.md**, **LICENSING.md**, and **CONFORMANCE_AND_NAME_USE.md** for the governing terms.
+
 ## AI Output Decision Governance Standard
 
 KPT 2.3 is a runtime decision-governance standard for AI candidate outputs.
