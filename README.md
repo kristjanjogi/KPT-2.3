@@ -15,14 +15,14 @@ KPT 2.3 is a runtime decision-governance standard for AI candidate outputs.
 
 It classifies outputs before influence or execution, separates decision state from enforcement action, and requires auditable trace before execution-relevant effect.
 
-This repository is a hybrid public KPT 2.3 repository: it contains the public standard layer together with supporting tests, examples, and selected reference or implementation-oriented materials.
+This repository is a public KPT 2.3 standard / checkpoint surface: it contains the public standard layer together with selected tests, examples, and supporting public checkpoint materials.
 
-Reading, discussion, and implementation study are public. Official conformance claims, official status claims, certification claims, and controlled KPT name use are governed separately.
+Reading and discussion are public. Commercial use, official conformance claims, official status claims, certification claims, and controlled KPT name use are governed separately.
 
 Author: Kristjan Jõgi  
-Status: Technical checkpoint bundle; core standard at release-candidate maturity, schema-clean canonical outputs verified across included suites
+Status: Public checkpoint bundle; not the full internal development state. The verification counts below apply only to the materials included in this public bundle.
 
-Checkpoint verification in this bundle:
+Verification counts in this public checkpoint bundle:
 - canonical v0.1: 8/8 passed
 - adversarial v0.1b: 6/6 passed
 - robustness v0.1c: 8/8 passed
@@ -164,7 +164,7 @@ Locked trace rules include:
 
 ## 7. Repository purpose
 
-This repository is intended to hold the public standard layer of KPT 2.3 and its supporting implementation-oriented artifacts.
+This repository is intended to hold the public standard layer of KPT 2.3 and its supporting public checkpoint artifacts.
 
 It is intended to support:
 - standard publication;
