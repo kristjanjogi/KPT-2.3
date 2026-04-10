@@ -6,7 +6,7 @@
 > **Public repo status**
 >
 > This repository is a **public standard, category, and authorship surface** for KPT.
-> It is **not** the full internal development state, full Runtime Core working tree, or the complete commercial implementation surface.
+> It is **not** the full internal development state, full Runtime Core codebase, or the complete commercial implementation surface.
 >
 > Public visibility does **not** grant automatic commercial use, official conformance claims, certification claims, or unrestricted KPT name use.
 > See **LICENSE.md**, **LICENSING.md**, and **CONFORMANCE_AND_NAME_USE.md** for the governing terms.

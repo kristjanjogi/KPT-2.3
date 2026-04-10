@@ -9,7 +9,7 @@ Applies to: KPT 2.3
 
 ## 1. Purpose
 
-This note defines the architecture of the first narrow working KPT reference engine.
+This note defines the architecture of the first narrow KPT reference engine.
 
 The purpose of the engine is to prove that KPT can run as a real runtime decision layer, not only as a documentation standard.
 
