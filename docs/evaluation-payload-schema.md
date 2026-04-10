@@ -2,7 +2,7 @@
 
 File: `schemas/evaluation-payload.schema.json`
 
-This schema defines the normalized input object for KPT middleware evaluation.
+This schema defines the normalized input object for KPT-aligned candidate-output evaluation.
 
 It exists to ensure that candidate-output evaluation begins from a consistent governed structure before decision assignment, enforcement mapping, and trace emission.
 

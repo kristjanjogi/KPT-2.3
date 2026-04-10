@@ -133,7 +133,7 @@ Core and required.
 Represents one KPT evaluation of one candidate output.
 
 ### Function
-This is the normative event produced when the middleware assigns:
+This is the normative event produced when the KPT decision layer assigns:
 
 - `decision_state`
 - `basis_codes`

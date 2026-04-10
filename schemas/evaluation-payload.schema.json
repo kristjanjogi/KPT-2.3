@@ -185,7 +185,7 @@
         "engine_version": {
           "type": "string",
           "minLength": 1,
-          "description": "Evaluator or middleware engine version."
+          "description": "Evaluator or KPT-aligned engine version."
         }
       }
     }
