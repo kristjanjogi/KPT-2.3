@@ -34,7 +34,7 @@ Authority note:
 
 Conformance note:
 - canonical decision and trace outputs in this public repo are validated against the canonical schemas
-- see `VERIFICATION_REPORT.md` and `docs/document-authority-map.md`
+- see `docs/checkpoints/2026-03-11-verification-report.md` and `docs/document-authority-map.md`
 
 ---
 
