@@ -249,8 +249,11 @@ KPT-2.3/
     minimum-testpack.yaml
     negative-testpack.yaml
   examples/
+    README.md
     trace-valid-example.json
     trace-invalid-example.json
+    appendix/
+      kpt-2_3_multicase_boundary_audit_companion.md
 ~~~
 
 This structure reflects both the standard layer and the implementation layer.
