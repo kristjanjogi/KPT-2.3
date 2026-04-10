@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://kpt.dev/schemas/decision-result.schema.json",
   "title": "KPT Decision Result",
-  "description": "Normalized decision object returned by KPT middleware after candidate-output evaluation.",
+  "description": "Normalized decision object for one evaluated candidate output in KPT 2.3.",
   "type": "object",
   "additionalProperties": false,
   "required": [

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://kpt.dev/schemas/evaluation-payload.schema.json",
   "title": "KPT Evaluation Payload",
-  "description": "Normalized input payload for KPT middleware candidate-output evaluation.",
+  "description": "Normalized input payload for KPT-aligned candidate-output evaluation.",
   "type": "object",
   "additionalProperties": false,
   "required": [
