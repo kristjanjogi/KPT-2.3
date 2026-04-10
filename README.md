@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **Public repo status**
 >
-> This repository is a **public standard / checkpoint surface** for KPT.
+> This repository is a **public standard, category, and authorship surface** for KPT.
 > It is **not** the full internal development state, full Runtime Core working tree, or the complete commercial implementation surface.
 >
 > Public visibility does **not** grant automatic commercial use, official conformance claims, certification claims, or unrestricted KPT name use.
@@ -15,25 +15,25 @@ KPT 2.3 is a runtime decision-governance standard for AI candidate outputs.
 
 It classifies outputs before influence or execution, separates decision state from enforcement action, and requires auditable trace before execution-relevant effect.
 
-This repository is a public KPT 2.3 standard / checkpoint surface: it contains the public standard layer together with selected tests, examples, and supporting public checkpoint materials.
+This repository is a public KPT 2.3 standard surface: it contains the public standard layer together with selected tests, examples, and supporting public reference materials.
 
 Reading and discussion are public. Commercial use, official conformance claims, official status claims, certification claims, and controlled KPT name use are governed separately.
 
 Author: Kristjan Jõgi  
-Status: Public checkpoint bundle; not the full internal development state. The verification counts below apply only to the materials included in this public bundle.
+Status: Public standard surface; not the full internal development state. The verification counts below apply only to the public materials included in this repository.
 
-Verification counts in this public checkpoint bundle:
+Verification counts for the current public reference-engine materials:
 - canonical v0.1: 8/8 passed
 - adversarial v0.1b: 6/6 passed
 - robustness v0.1c: 8/8 passed
 
 Authority note:
 - Markdown and JSON sources are authoritative.
-- Archival and convenience materials may exist outside this public repository assembly path.
-- The philosophical continuity note for this bundle is `docs/epistemic-humility-axiom.md`.
+- Archival and convenience materials may exist outside this public repository.
+- The philosophical continuity note in this public repo is `docs/epistemic-humility-axiom.md`.
 
 Conformance note:
-- canonical decision and trace outputs in this bundle are validated against the canonical schemas
+- canonical decision and trace outputs in this public repo are validated against the canonical schemas
 - see `VERIFICATION_REPORT.md` and `docs/document-authority-map.md`
 
 ---
@@ -164,7 +164,7 @@ Locked trace rules include:
 
 ## 7. Repository purpose
 
-This repository is intended to hold the public standard layer of KPT 2.3 and its supporting public checkpoint artifacts.
+This repository is intended to hold the public standard layer of KPT 2.3 and its supporting public reference artifacts.
 
 It is intended to support:
 - standard publication;
@@ -294,11 +294,11 @@ If you are new to KPT, read in this order.
 
 ## 11. Current project status
 
-KPT 2.3 is currently published as a public technical checkpoint.
+KPT 2.3 is currently published here as a public standard and reference surface.
 
 This repository contains the public standard layer, including core documents, schemas, tests, examples, and selected reference materials.
 
-The core logic is at release-candidate maturity, while some guidance and packaging details may continue to be refined in later updates.
+The public standard layer is published, while some guidance and reference materials may continue to be refined in later updates.
 
 ---
 
