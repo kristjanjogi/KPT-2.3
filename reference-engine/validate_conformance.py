@@ -2,7 +2,7 @@
 Validate canonical examples and generated decision/trace outputs against the
 KPT schemas.
 
-This script is intended as a release/checkpoint conformance gate for the bundle.
+This script is intended as a public conformance validation utility for the reference-engine surface.
 """
 
 from __future__ import annotations

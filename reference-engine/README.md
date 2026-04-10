@@ -461,7 +461,7 @@ python3 reference-engine/run_demo.py --cases reference-engine/demo_cases_v0_1c_r
 ```
 
 This removes the earlier v0.1 limitation where the runner was effectively locked to the canonical suite file.
-Generated reports now write package-relative artifact paths so the bundle stays portable across machines.
+Generated reports now write repo-relative artifact paths so the public reference-engine surface stays portable across machines.
 
 ## 20. Extension suites currently included
 
