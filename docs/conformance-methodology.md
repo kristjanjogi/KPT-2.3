@@ -23,14 +23,14 @@ It does **not** define general model quality benchmarking, style preference scor
 
 If runtime behavior, fixtures, and schemas disagree, the canonical schemas win.
 
-Normative precedence for this bundle:
+Normative precedence for this public repo:
 
 1. `schemas/*.json`
 2. `docs/quickstart.md`
 3. the rest of the normative documents
 4. informative runtime/demo materials
 
-The only deliberate schema-side exception in this bundle is `previous_trace_hash = null` for genesis traces.
+The only deliberate schema-side exception in the public schema surface is `previous_trace_hash = null` for genesis traces.
 
 ## 2. Conformance unit
 

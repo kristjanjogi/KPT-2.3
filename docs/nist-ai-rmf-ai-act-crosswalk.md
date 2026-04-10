@@ -2,7 +2,7 @@
 ## Operational crosswalk for KPT 2.3
 
 Author: Kristjan Jõgi  
-Status: Public working crosswalk for the KPT 2.3 technical checkpoint bundle  
+Status: Public working crosswalk for the KPT 2.3 standard surface  
 Applies to: KPT 2.3 public standard layer
 
 ## 1. Purpose

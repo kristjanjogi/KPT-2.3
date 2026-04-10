@@ -2,7 +2,7 @@
 
 **Author:** Kristjan Jõgi  
 **Document date:** 2026-03-11  
-**Version:** Technical checkpoint v6  
+**Version:** Public trace schema note v6  
 **Status:** Normative explanatory document  
 **Authority class:** Normative when read together with `schemas/trace.schema.json`
 
@@ -15,7 +15,7 @@ For trace structure, the canonical source of truth is:
 
 If this prose conflicts with the runtime demo layer, the schema wins.
 
-The only deliberate schema-side exception in this bundle is:
+The only deliberate schema-side exception in the public schema surface is:
 
 - `previous_trace_hash` MAY be `null` for a genesis trace record
 

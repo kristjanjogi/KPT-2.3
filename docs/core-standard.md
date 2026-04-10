@@ -3,7 +3,7 @@
 **Author:** Kristjan Jõgi  
 **Document date:** 2026-03-08
 
-**Version:** Public standard checkpoint  
+**Version:** Public standard version  
 **Status:** Public core standard  
 **Positioning:** KPT is a standard for AI output decision governance.
 
