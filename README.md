@@ -221,11 +221,11 @@ KPT-2.3/
     conformance-methodology.md
     appendix/
       suite-structure.md
+      technical-diagram-spec.md
     weaponized-form-guidance.md
     reference-middleware-spec.md
     reference-middleware-pseudocode.md
     implementation-guide.md
-    technical-diagram-spec.md
     zone-assignment-guidance.md
     rationale-field-guidance.md
     trace-stability-and-replay-guidance.md
@@ -273,7 +273,7 @@ If you are new to KPT, read in this order.
 4. [schemas/decision-result.schema.json](schemas/decision-result.schema.json)
 5. [schemas/trace.schema.json](schemas/trace.schema.json)
 6. [docs/implementation-guide.md](docs/implementation-guide.md)
-7. [docs/technical-diagram-spec.md](docs/technical-diagram-spec.md)
+7. [docs/appendix/technical-diagram-spec.md](docs/appendix/technical-diagram-spec.md)
 
 ### Path 4: Clarification / hardening guidance
 1. [docs/zone-assignment-guidance.md](docs/zone-assignment-guidance.md)

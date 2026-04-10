@@ -501,7 +501,7 @@ If a shorter summary is needed next to the diagram:
 ## 23. Recommended Repository Path
 
 ```text
-docs/technical-diagram-spec.md
+docs/appendix/technical-diagram-spec.md
 ```
 
 ---
