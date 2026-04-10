@@ -3,8 +3,8 @@
 **Author:** Kristjan Jõgi  
 **Document date:** 2026-03-08
 
-**Version:** Technical checkpoint bundle  
-**Status:** Release-candidate maturity  
+**Version:** Public standard checkpoint  
+**Status:** Public core standard  
 **Positioning:** KPT is a standard for AI output decision governance.
 
 ## 0. Normative Language and Conformance
@@ -49,7 +49,7 @@ A KPT-conformant implementation MUST NOT convert insufficiently grounded uncerta
 Where truth conditions are not sufficiently supported, the decision outcome MUST preserve that limitation.
 Under this standard, the admissible outcomes for such cases are `qualify`, `refuse_assert`, or `refuse_help`, as appropriate to the governing basis.
 
-This release focuses on the core decision-governance layer. It includes the minimum trace and conformance structures required to make the standard testable.
+This public standard focuses on the core decision-governance layer. It includes the minimum trace and conformance structures required to make the standard testable.
 
 ## 2. Terms and Definitions
 

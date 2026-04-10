@@ -1,64 +1,91 @@
-# KPT 2.3 Document Authority Map
+# KPT 2.3 Public Repo Authority Map
 
-**Document date:** 2026-03-11  
-**Status:** Current authority classification for this checkpoint bundle
+**Document date:** 2026-04-10  
+**Status:** Current authority classification for the public repo
 
-## Normative sources
+---
 
-These are the contract-defining sources for this bundle:
+## 1. Purpose
 
-- `schemas/evaluation-payload.schema.json`
-- `schemas/decision-result.schema.json`
-- `schemas/trace.schema.json`
+This file explains which public repo materials define the KPT 2.3 public contract, which materials are explanatory, and which materials are historical, companion, or example surfaces.
+
+This map governs the **public repo claim surface**. It does not imply that the public repo is a full implementation disclosure.
+
+---
+
+## 2. Normative public sources
+
+These are the primary public contract-defining sources for KPT 2.3 in this repo:
+
+- `docs/core-standard.md`
 - `docs/quickstart.md`
 - `docs/conformance-methodology.md`
 - `docs/decision-result-schema.md`
 - `docs/trace-schema.md`
 - `docs/basis-codes-registry.md`
-- `docs/core-standard.md`
+- `schemas/evaluation-payload.schema.json`
+- `schemas/decision-result.schema.json`
+- `schemas/trace.schema.json`
 
-The epistemic humility axiom is normative in this bundle through `docs/core-standard.md` and `docs/quickstart.md`, not as a standalone contract file.
+If another public file conflicts with these sources, these sources win.
 
-Interpretation rule:
+---
 
-- if runtime demo behavior conflicts with these sources, the normative sources win
-- the only deliberate schema correction in this bundle is `previous_trace_hash: null` for genesis traces
+## 3. Informative public sources
 
-## Informative sources
+These explain, demonstrate, compare, or operationalize the standard, but do not override the normative public contract:
 
-These explain, demonstrate, or operationalize the standard, but do not override the normative contract:
-
-- `reference-engine/README.md`
-- `reference-engine/GAP_REPORT.md`
-- `reference-engine/run_demo.py.pseudocode`
+- `docs/implementation-guide.md`
 - `docs/reference-middleware-spec.md`
 - `docs/reference-middleware-pseudocode.md`
 - `docs/kpt-engine-v0_1-architecture-note.md`
 - `docs/epistemic-humility-axiom.md`
 - `docs/diagrams/*`
+- `examples/*`
+- `reference-engine/*`
 - `tests/demo_cases*.yaml`
-- `pdf-pack/*`
+
+These materials are informative even when they are technically useful.
+
+---
+
+## 4. Historical, origin, and companion materials
+
+These preserve lineage, companion context, or historical rationale. They are public, but they are not the core public contract surface:
+
 - `origin/*`
-  - includes `origin/current/KPT_2_2_2_origin_story_ET_2026-02-25.pdf` as the preserved source text for the origin rationale
-  - includes `origin/current/KPT_origin_to_standard_bridge_2026-03-11.md` as the continuity bridge into KPT 2.3 wording
-- `artifacts/*`
+- `origin/current/*`
+- historical checkpoint or release notes
+- reconstructed audit companions
+- archive-style or appendix-style materials
 
-## Internal demo-fixture contract
+These materials may help explain continuity, but they must not be read as a substitute for the normative public sources.
 
-The following files intentionally retain a richer internal/demo fixture contract for comparison reporting:
+---
 
-- `reference-engine/demo_cases.yaml`
-- `reference-engine/demo_cases_v0_1b_adversarial.yaml`
-- `reference-engine/demo_cases_v0_1c_robustness.yaml`
-- mirrored copies under `tests/`
+## 5. Interpretation rule
 
-These demo fixtures are not the canonical trace/decision output schema.
-They drive runner comparisons and richer report-layer behavior.
+Use this order when reading the public repo:
 
-## Release criterion
+1. normative public sources
+2. informative public sources
+3. historical / origin / companion materials
 
-A checkpoint bundle should not be treated as contract-clean unless all three conditions hold:
+Do not treat examples, checkpoint notes, or companion artifacts as stronger than the public standard.
 
-1. examples validate as intended
-2. generated decisions validate
-3. generated traces validate
+---
+
+## 6. Repo-boundary rule
+
+The public repo is:
+- a claim surface
+- a category surface
+- a vocabulary surface
+- an authorship surface
+- a protection surface
+
+The public repo is not:
+- a complete internal implementation dump
+- a complete private proof pack
+- a full runtime-core disclosure
+- a production-complete platform export

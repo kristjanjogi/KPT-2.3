@@ -1,10 +1,11 @@
 # KPT 2.3 Quickstart
+
 ## Start Here in 10 Minutes
 
-Author: Kristjan Jõgi  
-Status: Public quickstart guide for the KPT 2.3 technical checkpoint bundle  
-Applies to: KPT 2.3  
-Authority class: Normative minimum-contract guide
+**Author:** Kristjan Jõgi  
+**Status:** Public quickstart guide  
+**Applies to:** KPT 2.3  
+**Authority class:** Normative minimum-contract guide
 
 ---
 
@@ -17,7 +18,6 @@ Its core idea is simple:
 **Model output is not action.**
 
 A model may generate a response, recommendation, or tool proposal, but that output should not automatically be treated as:
-
 - a reliable assertion;
 - a safe instruction;
 - an approved action;
@@ -25,8 +25,9 @@ A model may generate a response, recommendation, or tool proposal, but that outp
 
 KPT inserts a governance step between **candidate output** and **real-world effect**.
 
-KPT begins from an epistemic humility rule:
+This document describes the **public standard layer** of KPT. It does **not** disclose a full runtime-core implementation.
 
+KPT begins from an epistemic humility rule:
 - the system operates on representations, not direct reality;
 - those representations may be incomplete or wrong;
 - therefore weak grounding must not be turned into confident assertion.
@@ -40,7 +41,6 @@ In practice, that means KPT uses `qualify`, `refuse_assert`, or `refuse_help` wh
 Most AI systems can already generate outputs.
 
 The real problem begins one step later:
-
 - Can this answer be shown to the user as-is?
 - Does it need qualification?
 - Is it too weak to assert?
@@ -54,7 +54,6 @@ KPT exists to answer those questions **before influence or execution**.
 ## 3. The four decision states
 
 Every governed candidate output must receive one of these four decision states:
-
 - `deliver`
 - `qualify`
 - `refuse_assert`
@@ -77,20 +76,15 @@ The output itself would be harmful, disallowed, or weaponized.
 ## 4. The single most important distinction
 
 KPT separates:
-
 - **decision state** = what the output is;
 - **enforcement action** = what the system does because of that status.
 
 This is a core design rule.
 
 Example:
-
-A candidate output may be:
-- `qualify`
-
-while enforcement may be:
-- display allowed with qualification;
-- execution blocked.
+- a candidate output may be `qualify`;
+- enforcement may still allow display with qualification;
+- execution may still be blocked.
 
 KPT does not treat those as the same thing.
 
@@ -98,19 +92,11 @@ KPT does not treat those as the same thing.
 
 ## 5. The minimal KPT flow
 
-```text
-User/Input
-  -> Model/Agent
-  -> Candidate Output
-  -> KPT Evaluation
-  -> Decision State
-  -> Enforcement Mapping
-  -> Trace Written
-  -> Display and/or Execution
-```
+~~~text
+User/Input -> Model/Agent -> Candidate Output -> KPT Evaluation -> Decision State -> Enforcement Mapping -> Trace Written -> Display and/or Execution
+~~~
 
 This means:
-
 1. the model generates a candidate output;
 2. the candidate is evaluated;
 3. a KPT decision is assigned;
@@ -168,7 +154,7 @@ Deployment mode controls the overall assurance posture of the system.
 
 Important:
 - `zone` = governed context;
-- `profile` = output-handling caution context;
+- `profile` = output target context;
 - `deployment_mode` = assurance posture;
 - `decision_state` = final output status.
 
@@ -180,7 +166,7 @@ A minimal KPT evaluation begins with a normalized payload.
 
 Example:
 
-```json
+~~~json
 {
   "input_ref": "req_001",
   "output_ref": "cand_001",
@@ -197,7 +183,7 @@ Example:
     "downstream_target": "tool"
   },
   "provenance": {
-    "source_basis": ["model synthesis"],
+    "source_basis": ["model_synthesis"],
     "verification_state": "unverified",
     "time_sensitivity": "medium"
   },
@@ -206,7 +192,7 @@ Example:
     "engine_version": "kpt-mw-ref-v0.1"
   }
 }
-```
+~~~
 
 Reference schema:
 - `schemas/evaluation-payload.schema.json`
@@ -217,7 +203,7 @@ Reference schema:
 
 Example:
 
-```json
+~~~json
 {
   "decision_state": "qualify",
   "basis_codes": ["EPI-UNCERTAIN", "VER-REQUIRED"],
@@ -229,197 +215,51 @@ Example:
   },
   "trace_id": "trace_001"
 }
-```
+~~~
 
 Reference schema:
 - `schemas/decision-result.schema.json`
 
 ---
 
-## 11. The minimum trace object
+## 11. The minimum trace idea
 
-Example:
+A trace is not cosmetic logging.
 
-```json
-{
-  "trace_id": "trace_001",
-  "timestamp": "2026-03-10T09:14:29Z",
-  "input_ref": "req_001",
-  "output_ref": "cand_001",
-  "zone": "critical",
-  "profile": "KPT-H",
-  "deployment_mode": "High-Assurance",
-  "decision_state": "qualify",
-  "basis_codes": ["EPI-UNCERTAIN", "VER-REQUIRED"],
-  "rationale": "Execution-relevant recommendation requires stronger verification before action.",
-  "qualification_type": "verification_required",
-  "execution_relevance": true,
-  "enforcement_action": {
-    "display": "allow_with_qualification",
-    "execution": "block"
-  },
-  "policy_version": "kpt-2.3-core-v0.2",
-  "engine_version": "kpt-mw-ref-v0.1",
-  "previous_trace_hash": "prev_hash_here",
-  "integrity_hash": "integrity_hash_here"
-}
-```
+A trace is part of the governance boundary.
+
+At minimum, a KPT trace binds together:
+- the evaluated candidate output;
+- the decision state;
+- the basis codes;
+- the qualification status;
+- the enforcement action;
+- the policy version;
+- the engine version.
 
 Reference schema:
 - `schemas/trace.schema.json`
 
 ---
 
-## 12. The rule that changes everything
+## 12. What this quickstart is for
 
-For execution-relevant outputs:
+This quickstart is for understanding:
+- what KPT governs;
+- why output is not action;
+- why decision must precede influence and execution;
+- and how the minimum public contract hangs together.
 
-**trace must be written before execution begins.**
-
-This is one of the strongest KPT claims.
-
-KPT is not only about evaluating outputs.
-It is about controlling the boundary between:
-
-- candidate output;
-- and real-world effect.
+It is not a full product manual, not a complete internal architecture disclosure, and not a substitute for the core standard.
 
 ---
 
-## 13. Human path vs machine path
+## 13. Read next
 
-### Human path
-
-```text
-query -> model -> candidate output -> KPT -> trace -> display
-```
-
-Question being answered:
-
-**Can this be shown?**
-
-### Machine path
-
-```text
-query -> model -> candidate output -> KPT -> trace -> execution gate -> machine action
-```
-
-Question being answered:
-
-**Can this be executed?**
-
----
-
-## 14. One simple example
-
-### Input
-A user asks an assistant to send an operational message or trigger a real action.
-
-### Candidate output
-The model proposes:
-
-> “Proceed with the database update now.”
-
-### KPT handling
-- `zone`: `critical`
-- `profile`: `KPT-H`
-- `deployment_mode`: `High-Assurance`
-- execution relevance: `true`
-- verification state: insufficient
-
-### Result
-- `decision_state`: `qualify`
-- display may be allowed with qualification
-- execution must be blocked
-- trace must be written first
-
-This shows a core KPT rule:
-
-**qualified execution-relevant output does not execute.**
-
----
-
-## 15. Safe replacement rule
-
-If an original candidate output is blocked and a safe replacement is shown, KPT requires:
-
-- one trace for the blocked candidate;
-- one trace for the replacement output.
-
-This is the dual-trace rule.
-
----
-
-## 16. What KPT is not
-
-KPT is not:
-
-- a generic moderation layer;
-- a promise that the model is always true;
-- a logging system added after the fact;
-- a tool that replaces domain experts;
-- a shortcut for skipping system design.
-
-It is a **decision-governance boundary**.
-
----
-
-## 17. The fastest way to understand KPT
-
-If you remember only five lines, remember these:
-
-1. **Model output is not action.**
-2. **Every governed output needs a decision before influence or execution.**
-3. **Decision state is not enforcement action.**
-4. **Trace before trust.**
-5. **Execution-relevant qualified output does not execute.**
-
----
-
-## 18. What to read next
-
-If you want the shortest path through the repository, read in this order:
-
-1. `README.md`
-2. `docs/core-standard.md`
-3. `docs/zone-assignment-guidance.md`
-4. `docs/rationale-field-guidance.md`
-5. `docs/reference-middleware-spec.md`
-6. `docs/reference-middleware-pseudocode.md`
-7. `schemas/evaluation-payload.schema.json`
-8. `schemas/decision-result.schema.json`
-9. `schemas/trace.schema.json`
-10. `docs/conformance-methodology.md`
-
----
-
-## 19. What to build first
-
-If you are implementing KPT, start with this minimum stack:
-
-- evaluation payload
-- decision result
-- trace object
-- execution gate
-- append-only trace write
-
-If you are publishing KPT, strengthen this next:
-
-- quickstart
-- changelog
-- self-attestation checklist
-- reference demo
-
----
-
-## 20. Recommended repository path
-
-```text
-docs/quickstart.md
-```
-
----
-
-## 21. One-line summary
-
-KPT 2.3 is a runtime decision-governance standard that classifies AI candidate outputs before influence or execution, separates decision state from enforcement, and requires auditable trace emission before execution-relevant action.
+Recommended order:
+1. `docs/core-standard.md`
+2. `docs/decision-result-schema.md`
+3. `docs/trace-schema.md`
+4. `docs/basis-codes-registry.md`
+5. `docs/implementation-guide.md`
+6. `docs/reference-middleware-spec.md`

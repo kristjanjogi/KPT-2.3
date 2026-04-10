@@ -1,131 +1,110 @@
-# KPT Reference Middleware Specification
-## Working Draft v0.1
+# KPT Reference Middleware Pattern
 
-Author: Kristjan Jõgi  
-Status: Draft  
-Applies to: KPT 2.3
+## Public Reference Pattern v0.2
+
+**Author:** Kristjan Jõgi  
+**Status:** Draft  
+**Applies to:** KPT 2.3
 
 ---
 
 ## 1. Purpose
 
-KPT Reference Middleware is a control-layer pattern for AI systems whose outputs may influence decisions or trigger external actions.
+This document describes **one public reference realization pattern** for KPT.
 
-Its purpose is to ensure that:
+It is not the definition of KPT itself.
 
-- every governed candidate output is evaluated before influence or execution;
-- every evaluation produces a decision state;
-- execution-relevant outputs cannot bypass decisioning;
-- trace emission happens before execution;
-- enforcement action is downstream of decision state, not a substitute for it.
+Its purpose is to show how a governance boundary can sit between:
+- an upstream generation component
+- a downstream display, tool, workflow, or action layer
 
-This middleware is not the model.  
-This middleware is not the business workflow.  
-This middleware is the governance boundary between candidate output and real-world effect.
+The pattern exists to ensure that:
+- every governed candidate output is evaluated before influence or execution
+- every evaluation produces a decision state
+- execution-relevant outputs cannot bypass decisioning
+- trace emission happens before execution
+- enforcement action is downstream of decision state, not a substitute for it
 
 ---
 
-## 2. Position in System Architecture
+## 2. Position in system architecture
 
 The reference middleware sits between:
+- an upstream generation component
+- a downstream display, tool, workflow, or action layer
 
-- an upstream generation component; and
-- a downstream display, tool, workflow, or action layer.
+### High-level placement
 
-### High-Level Placement
+~~~text
+User/Input -> Application Context Builder -> Model/Agent -> Candidate Output -> KPT Middleware -> Enforcement Layer -> Display and/or Execution
+~~~
 
-```text
-User/Input
-  -> Application Context Builder
-  -> Model/Agent
-  -> Candidate Output
-  -> KPT Middleware
-  -> Enforcement Layer
-  -> Display and/or Execution
-```
-
-KPT middleware receives a candidate output and decides whether that output may:
-
-- be displayed as-is;
-- be displayed with qualification;
-- be blocked from assertion;
-- be blocked from harmful assistance;
-- be blocked from execution;
-- be replaced by a separately evaluated safe alternative.
+KPT middleware receives a candidate output and determines its admissibility status before downstream effect.
 
 ---
 
-## 3. Core Architectural Principle
+## 3. Core architectural principle
 
-### Output Is Not Action
+### Output is not action
 
 A model or agent may produce text, structured data, or a proposed tool invocation.
 
 That proposal has no execution authority until KPT evaluation completes.
 
 Therefore:
-
-- generated content is only a candidate output;
-- the candidate output must be evaluated;
-- a decision state is assigned first;
-- a trace is written;
-- only then may downstream enforcement permit display or execution.
+- generated content is only a candidate output
+- the candidate output must be evaluated
+- a decision state is assigned first
+- a trace is written
+- only then may downstream enforcement permit display or execution
 
 ---
 
-## 4. Scope of Governed Objects
+## 4. Scope of governed objects
 
 The middleware should be able to evaluate at least the following object types.
 
-### A. Natural-Language Response
-
+### A. Natural-language response
 Examples:
+- answer to a user question
+- explanation
+- recommendation
+- instruction
 
-- answer to a user question;
-- explanation;
-- recommendation;
-- instruction.
-
-### B. Structured Response
-
+### B. Structured response
 Examples:
+- JSON answer
+- classification result
+- extracted fields
+- risk summary
 
-- JSON answer;
-- classification result;
-- extracted fields;
-- risk summary.
-
-### C. Execution-Relevant Proposal
-
+### C. Execution-relevant proposal
 Examples:
+- tool call
+- API request
+- database write
+- email send proposal
+- workflow transition
+- file modification
+- transaction proposal
 
-- tool call;
-- API request;
-- database write;
-- email send proposal;
-- workflow transition;
-- file modification;
-- transaction proposal.
-
-### D. Safe Replacement Output
-
+### D. Safe replacement output
 Examples:
-
-- refusal;
-- safer guidance;
-- constrained reformulation after blocking an unsafe candidate.
+- refusal
+- safer guidance
+- constrained reformulation after blocking an unsafe candidate
 
 **Important rule:** blocked candidate output and replacement output are separate evaluated objects and require separate traces.
 
 ---
 
-## 5. Required Middleware Inputs
+## 5. Required middleware inputs
 
 The reference middleware should receive a normalized evaluation payload.
 
-### 5.1 Evaluation Payload
+### 5.1 Evaluation payload
 
-```yaml
+~~~yaml
 evaluation_payload:
   input_ref: "pointer to prompt/request/event"
   output_ref: "pointer to candidate output"
@@ -149,477 +128,201 @@ evaluation_payload:
   policy:
     policy_version: "kpt-2.3-core-v0.2"
     engine_version: "kpt-mw-ref-v0.1"
-```
+~~~
 
 ---
 
-## 6. Middleware Outputs
+## 6. Middleware outputs
 
 The middleware returns a decision object and triggers trace creation.
 
-### 6.1 Decision Object
+### 6.1 Decision object
 
-```yaml
+~~~yaml
 decision_result:
   decision_state: "deliver | qualify | refuse_assert | refuse_help"
   basis_codes:
     - "EPI-UNCERTAIN"
-    - "TMP-TIME-SENSITIVE"
-  qualification_type: "time_sensitive"
-  rationale: "Currentness is material and verification is insufficient for an unqualified answer."
+    - "VER-REQUIRED"
+  qualification_type: "verification_required"
+  rationale: "Execution-relevant recommendation requires stronger verification before action."
   enforcement_action:
     display: "allow_with_qualification"
     execution: "block"
   trace_id: "generated-trace-id"
-```
+~~~
 
 ---
 
-## 7. Decision Logic Responsibilities
+## 7. Decision logic responsibilities
 
-The reference middleware must perform or orchestrate the following checks.
+The reference middleware must perform or orchestrate the following checks:
 
-### A. Zone-Aware Evaluation
-
+### A. Zone-aware evaluation
 Determine required strictness based on governed context:
+- critical
+- analytical
+- creative
 
-- critical;
-- analytical;
-- creative.
-
-### B. Epistemic Sufficiency
-
+### B. Epistemic sufficiency
 Determine whether the candidate is:
+- sufficiently supported
+- uncertain and therefore qualified
+- insufficient for assertion
 
-- sufficiently supported;
-- uncertain and therefore qualified;
-- insufficient for assertion.
-
-### C. Safety / Disallowed Help
-
+### C. Safety / disallowed help
 Determine whether the candidate constitutes disallowed assistance.
 
-### D. Weaponized Form Control
-
+### D. Weaponized form control
 Detect formally compliant but functionally harmful outputs.
 
-### E. Execution Relevance
-
+### E. Execution relevance
 Determine whether downstream action is possible or proposed.
 
-### F. Qualification Derivation
-
+### F. Qualification derivation
 If decision is `qualify`, derive `qualification_type` from basis-code families.
 
-### G. Enforcement Mapping
-
+### G. Enforcement mapping
 Convert `decision_state` plus `execution_relevance` into downstream allow/block behavior.
 
-### H. Trace Emission
-
+### H. Trace emission
 Write trace before any execution-relevant commitment occurs.
 
 ---
 
-## 8. Minimal Decision Algorithm
+## 8. Minimal decision algorithm
 
-### 8.1 Ordered Logic
+### 8.1 Ordered logic
 
 The evaluation order should be:
 
-1. normalize candidate output;
-2. determine governed context;
-3. determine execution relevance;
-4. run safety and weaponized-form checks;
-5. run epistemic sufficiency checks;
-6. assign decision state;
-7. derive qualification type if needed;
-8. map enforcement action;
-9. emit trace;
-10. permit display and/or execution according to enforcement rules.
+1. normalize candidate output
+2. determine governed context
+3. determine execution relevance
+4. run safety and weaponized-form checks
+5. run epistemic sufficiency checks
+6. assign decision state
+7. derive qualification type if needed
+8. map enforcement action
+9. emit trace
+10. permit display and/or execution according to enforcement rules
 
-### 8.2 Precedence Rules
+### 8.2 Precedence rules
 
-#### Safety Precedence
-
+#### Safety precedence
 If `SAFE-DISALLOWED-HELP` or `WF-WEAPONIZED-FORM` applies:
+- decision must be `refuse_help`
+- execution must be blocked
+- candidate output must not be displayed as requested
 
-- decision must be `refuse_help`;
-- execution must be blocked;
-- candidate output must not be displayed as requested.
-
-#### Epistemic Refusal
-
+#### Epistemic refusal
 If epistemic basis is insufficient for assertion:
+- decision must be `refuse_assert`
 
-- decision must be `refuse_assert`.
-
-#### Qualification Rule
-
+#### Qualification rule
 If output is admissible only with limits or uncertainty:
+- decision must be `qualify`
+- `EPI-UNCERTAIN` must be present
 
-- decision must be `qualify`;
-- `EPI-UNCERTAIN` must be present.
-
-#### Clean Delivery
-
+#### Clean delivery
 If output is sufficiently supported and no limiting or safety codes apply:
-
-- decision may be `deliver`.
+- decision may be `deliver`
 
 ---
 
-## 9. Enforcement Boundary
+## 9. Enforcement boundary
 
 This is the critical runtime rule.
 
-### 9.1 What KPT Decides
+### 9.1 What KPT decides
 
-KPT decides:
+KPT determines:
+- status of candidate output
+- admissibility of output form
+- whether qualification is required
+- whether the candidate is execution-blocked or execution-eligible under the mapped enforcement contract
 
-- status of candidate output;
-- admissibility of output form;
-- whether qualification is required;
-- whether execution may proceed.
+KPT does **not** collapse that decision into the downstream act of displaying, dispatching, or committing.
 
-### 9.2 What Enforcement Does
+### 9.2 What enforcement does
 
-Enforcement does:
+The downstream enforcement layer does things such as:
+- display
+- hide
+- decorate with qualification
+- block tool call
+- block API submission
+- allow downstream commit
+- substitute safe alternative
 
-- display;
-- hide;
-- decorate with qualification;
-- block tool call;
-- block API submission;
-- allow downstream commit;
-- substitute safe alternative.
+### 9.3 Locked distinction
 
-KPT and enforcement are distinct.
-
-### Locked Distinction
-
-- `decision_state` = what the output is;
-- `enforcement_action` = what the system does because of that status.
+- `decision_state` = what the output is
+- `enforcement_action` = what the system does because of that status
 
 ---
 
-## 10. Required Enforcement Mappings
+## 10. Required enforcement mappings
 
 ### 10.1 Deliver
 
 Typical outcome:
+- display allowed
+- execution may be allowed if execution-relevant and route policy permits
 
-- display allowed;
-- execution may be allowed if execution-relevant and policy permits.
-
-```yaml
+~~~yaml
 decision_state: "deliver"
 enforcement_action:
   display: "allow"
   execution: "allow"
-```
+~~~
 
 ### 10.2 Qualify
 
-#### Non-Execution-Relevant
+#### Non-execution-relevant
+- display allowed with qualification
+- no action execution
 
-- display allowed with qualification;
-- no action execution.
+#### Execution-relevant
+- display may be allowed with qualification
+- execution must be blocked
 
-#### Execution-Relevant
-
-- display may be allowed with qualification;
-- execution must be blocked.
-
-```yaml
+~~~yaml
 decision_state: "qualify"
 enforcement_action:
   display: "allow_with_qualification"
   execution: "block"
-```
+~~~
 
-### 10.3 Refuse Assert
+### 10.3 Refuse assert
+- original candidate display blocked
+- execution blocked
+- optional safe alternative may be generated and separately evaluated
 
-- original candidate display blocked;
-- execution blocked;
-- optional safe alternative may be generated and separately evaluated.
-
-### 10.4 Refuse Help
-
-- original candidate display blocked;
-- execution blocked;
-- optional safe alternative may be generated and separately evaluated.
+### 10.4 Refuse help
+- original candidate display blocked
+- execution blocked
+- optional safe alternative may be generated and separately evaluated
 
 ---
 
-## 11. Trace Requirements at Middleware Level
+## 11. Trace requirements at middleware level
 
 Every evaluated candidate output must create a trace.
 
-### 11.1 Minimum Required Trace Fields
-
-```yaml
-trace:
-  trace_id: "uuid"
-  timestamp: "ISO8601"
-  input_ref: "input pointer"
-  output_ref: "candidate pointer"
-  zone: "critical"
-  profile: "KPT-H"
-  deployment_mode: "High-Assurance"
-  decision_state: "qualify"
-  basis_codes:
-    - "EPI-UNCERTAIN"
-    - "TMP-TIME-SENSITIVE"
-  qualification_type: "time_sensitive"
-  execution_relevance: true
-  enforcement_action:
-    display: "allow_with_qualification"
-    execution: "block"
-  rationale: "Currentness materially affects correctness and verification was insufficient."
-  policy_version: "kpt-2.3-core-v0.2"
-  engine_version: "kpt-mw-ref-v0.1"
-  previous_trace_hash: "..."
-  integrity_hash: "..."
-```
-
-### 11.2 Trace Timing Rule
-
 For execution-relevant outputs:
+- trace must be written before downstream execution begins
 
-- trace must exist before execution starts.
+If a blocked candidate is replaced:
+- the blocked candidate gets its own trace
+- the replacement gets its own trace
 
-### 11.3 Dual-Trace Rule
-
-If candidate output is blocked and a replacement is shown:
-
-- candidate output gets one trace;
-- replacement output gets a second trace.
+Trace is part of the governance boundary, not a cosmetic report layer.
 
 ---
 
-## 12. Reference Runtime Flows
+## 12. Boundary note
 
-### 12.1 Normal Answer Flow
+This pattern is public by design.
 
-1. user asks a question;
-2. application builds context;
-3. model generates candidate answer;
-4. KPT middleware evaluates;
-5. decision = `deliver` / `qualify` / `refuse_assert` / `refuse_help`;
-6. trace is emitted;
-7. display layer follows enforcement rule.
-
-### 12.2 Tool-Execution Flow
-
-1. agent proposes tool call;
-2. proposal enters KPT middleware as candidate output;
-3. KPT evaluates content and execution relevance;
-4. trace is emitted;
-5. only an allowed decision/enforcement combination may pass to tool runner;
-6. tool runner executes or blocks.
-
-### 12.3 Safe Replacement Flow
-
-1. harmful or insufficient candidate is blocked;
-2. system generates safe alternative;
-3. safe alternative is treated as a new candidate output;
-4. second KPT evaluation occurs;
-5. second trace is emitted;
-6. safe alternative is displayed if admissible.
-
----
-
-## 13. Integration Modes
-
-The middleware should support at least three deployment patterns.
-
-### 13.1 Inline Synchronous Middleware
-
-Used when:
-
-- live user interaction;
-- immediate tool calls;
-- strong execution control is needed.
-
-Best suited for:
-
-- assistants;
-- agent runtimes;
-- internal governance gateways.
-
-### 13.2 Sidecar Service
-
-Separate decision service called by application backend.
-
-Best suited for:
-
-- multi-model environments;
-- multiple products sharing one governance service;
-- centralized tracing.
-
-### 13.3 Embedded Library
-
-KPT logic packaged into application runtime.
-
-Best suited for:
-
-- simple pilots;
-- demos;
-- local testing.
-
----
-
-## 14. Reference Interfaces
-
-### 14.1 Evaluate Endpoint
-
-```text
-POST /kpt/evaluate
-```
-
-Input:
-
-- normalized evaluation payload.
-
-Output:
-
-- decision result;
-- trace metadata;
-- enforcement instruction.
-
-### 14.2 Trace Write Interface
-
-```text
-POST /kpt/trace
-```
-
-May be internal-only if evaluate writes trace automatically.
-
-### 14.3 Policy Registry Interface
-
-```text
-GET /kpt/policy/current
-GET /kpt/basis-codes/current
-```
-
-Used to pin evaluation behavior to explicit versions.
-
----
-
-## 15. Minimal Internal Modules
-
-A reference middleware implementation should include the following modules.
-
-### 15.1 Normalizer
-
-Converts raw output into governed candidate form.
-
-### 15.2 Context Resolver
-
-Resolves zone, profile, deployment mode, and execution relevance.
-
-### 15.3 Safety Evaluator
-
-Checks disallowed help and weaponized form.
-
-### 15.4 Epistemic Evaluator
-
-Checks sufficiency, uncertainty, and limitation basis.
-
-### 15.5 Decision Resolver
-
-Assigns `decision_state` and `qualification_type`.
-
-### 15.6 Enforcement Mapper
-
-Maps decision result to downstream actions.
-
-### 15.7 Trace Emitter
-
-Writes append-only or tamper-evident trace.
-
-### 15.8 Policy Loader
-
-Pins rules to declared policy versions.
-
----
-
-## 16. Non-Goals
-
-The reference middleware does not attempt to:
-
-- guarantee model truthfulness;
-- replace domain expertise;
-- perform all retrieval itself;
-- define business workflow semantics;
-- replace authentication or authorization systems;
-- replace application safety policies outside output governance.
-
-It governs admissibility of outputs before influence or execution.
-
----
-
-## 17. First Canonical Demo Scenario
-
-The best first demo should be:
-
-### Agent Proposes External Action Under Uncertainty
-
-Scenario:
-
-- user asks assistant to perform a financial or operational action;
-- agent builds a plan;
-- agent proposes a tool or API call;
-- KPT evaluates the proposal;
-- uncertainty or insufficient verification exists;
-- execution is blocked;
-- user receives a qualified or refusal-form response;
-- trace is shown.
-
-### Why This Is the Right First Demo
-
-It demonstrates:
-
-- output != action;
-- decision before execution;
-- `qualify` does not authorize execution;
-- trace before commit;
-- KPT’s distinction from surface-level moderation.
-
----
-
-## 18. Conformance-Relevant Assertions
-
-A middleware implementation claiming alignment with this specification should satisfy at minimum:
-
-- one trace per evaluated candidate output;
-- dual-trace behavior for blocked candidate plus safe replacement;
-- trace-before-execution for execution-relevant outputs;
-- safety precedence over epistemic sufficiency;
-- `qualify` includes `EPI-UNCERTAIN`;
-- execution-relevant `qualify` blocks execution;
-- decision state is recorded independently from enforcement action.
-
----
-
-## 19. File Placement Recommendation
-
-Recommended repository path:
-
-```text
-docs/reference-middleware-spec.md
-```
-
----
-
-## 20. Next Artifact
-
-The next recommended artifact is a pseudocode evaluator flow defining:
-
-- request normalization;
-- decision sequencing;
-- precedence handling;
-- trace creation;
-- enforcement mapping;
-- safe replacement loop.
+It shows the shape of a KPT realization pattern without claiming to expose every internal runtime component or every private implementation detail.
