@@ -240,7 +240,6 @@ KPT-2.3/
     trace-stability-and-replay-guidance.md
     evaluation-payload-schema.md
     decision-result-schema.md
-    trace-schema-schema.md
   schemas/
     evaluation-payload.schema.json
     decision-result.schema.json
