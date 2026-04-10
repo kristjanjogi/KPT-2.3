@@ -1,5 +1,5 @@
-# KPT 2.3 Multicase Boundary Audit
-## Full Example Set with Questions, Answers, Assessment, and Reconstructed Traces
+# KPT 2.3 Multicase Boundary Audit Companion
+## Appendix Example Set with Questions, Answers, Assessment, and Reconstructed Traces
 
 Author: Kristjan Jõgi  
 Status: Example / Audit Companion  
@@ -9,7 +9,7 @@ Applies to: KPT 2.3
 
 ## Purpose
 
-This file provides a full English multicase boundary audit example for KPT 2.3.
+This file provides a reconstructed English multicase audit companion for KPT 2.3.
 
 Each case includes:
 - the original user question;
@@ -704,5 +704,5 @@ That would likely apply to:
 ## Recommended repository path
 
 ```text
-examples/kpt-2_3_multicase_boundary_audit_full.md
+examples/appendix/kpt-2_3_multicase_boundary_audit_companion.md
 ```
