@@ -1,5 +1,8 @@
 # KPT 2.3 Licensing Guide
 
+**Author:** Kristjan Jõgi  
+**Status:** Explanatory licensing guide
+
 This file explains, in practical terms, how the KPT 2.3 materials may and may not be used.
 
 This guide is explanatory. If there is any conflict between this file and `LICENSE.md`, `LICENSE.md` controls.

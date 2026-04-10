@@ -1,5 +1,8 @@
 # Conformance and Name Use Policy
 
+**Author:** Kristjan Jõgi  
+**Status:** Repository-level conformance and name-use policy
+
 This repository makes KPT 2.3 materials publicly available for reading, review, discussion, research, and implementation study.
 
 Public availability of these materials does not by itself grant any automatic right to:

@@ -1,5 +1,7 @@
 # KPT Origin to Standard Bridge
 
+**Author:** Kristjan Jõgi
+
 **Document date:** 2026-03-11  
 **Status:** Informative continuity note  
 **Source basis:** `origin/current/KPT_2_2_2_origin_story_ET_2026-02-25.pdf`
