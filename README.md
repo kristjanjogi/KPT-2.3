@@ -1,5 +1,7 @@
 # KPT 2.3
 
+**Author:** Kristjan Jõgi
+
 > [!IMPORTANT]
 > **Public repo status**
 >

@@ -1,6 +1,10 @@
-# Evaluation Payload Schema
+# KPT 2.3 Evaluation Payload Schema
 
 File: `schemas/evaluation-payload.schema.json`
+
+**Author:** Kristjan Jõgi  
+**Status:** Normative explanatory note  
+**Authority class:** Normative explanatory document when read together with the schema file.
 
 This schema defines the normalized input object for KPT-aligned candidate-output evaluation.
 

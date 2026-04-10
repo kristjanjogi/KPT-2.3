@@ -1,5 +1,6 @@
 # KPT 2.3 Public Repo Authority Map
 
+**Author:** Kristjan Jõgi  
 **Document date:** 2026-04-10  
 **Status:** Current authority classification for the public repo
 

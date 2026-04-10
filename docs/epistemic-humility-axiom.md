@@ -1,5 +1,6 @@
 # Epistemic Humility Axiom
 
+**Author:** Kristjan Jõgi  
 **Document date:** 2026-03-11  
 **Status:** Informative interpretive note  
 **Authority class:** Informative; normative force is carried by `docs/core-standard.md` and `docs/quickstart.md`

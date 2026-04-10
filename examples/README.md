@@ -1,5 +1,8 @@
 # Examples Surface
 
+**Author:** Kristjan Jõgi  
+**Status:** Public example surface note
+
 This directory contains **public example materials** for KPT 2.3.
 
 It does not imply that every file here is a live runtime export or a full implementation artifact.

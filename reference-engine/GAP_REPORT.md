@@ -1,5 +1,8 @@
 # Reference Engine Status Note
 
+**Author:** Kristjan Jõgi  
+**Status:** Public reference-engine status note
+
 ## Current public reference-engine status
 
 Public suite results currently shown in this repo:

@@ -1,5 +1,8 @@
 # KPT Reference Engine v0.1
 
+**Author:** Kristjan Jõgi  
+**Status:** Public reference-engine README
+
 Reference implementation workspace for the first narrow working KPT decision engine.
 
 This directory exists to prove that KPT can run as a real runtime decision layer, not only as a documentation standard.
