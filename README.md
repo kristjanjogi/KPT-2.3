@@ -1,28 +1,16 @@
 # KPT 2.3
 
-**Author:** Kristjan Jõgi
+**Created by Kristjan Jõgi**
 
-> [!IMPORTANT]
-> **Public repo status**
->
-> This repository is a **public standard, category, and authorship surface** for KPT.
-> It is **not** the full internal development state, full Runtime Core codebase, or the complete commercial implementation surface.
->
-> Public visibility does **not** grant automatic commercial use, official conformance claims, certification claims, or unrestricted KPT name use.
-> See **LICENSE.md**, **LICENSING.md**, and **CONFORMANCE_AND_NAME_USE.md** for the governing terms.
+KPT 2.3 is a runtime decision-governance standard for AI systems. It defines what must be true about a candidate output before that output is allowed to influence a user, a workflow, or an execution path. Its central premise is simple: **model output is not action**.
 
-## AI Output Decision Governance Standard
+KPT inserts an explicit governance decision between candidate output and downstream consequence. It separates decision state from enforcement action, separates handoff from delivery, and requires trace before trust. It is therefore a control boundary for consequential AI use, not a prompt library, moderation wrapper, or generic governance deck.
 
-KPT 2.3 is a runtime decision-governance standard for AI candidate outputs.
+**Current public status:** the core boundary model and standard framing are defined, while some supporting guidance and reference materials in this repository remain draft.
 
-It classifies outputs before influence or execution, separates decision state from enforcement action, and requires auditable trace before execution-relevant effect.
+This repository is the public KPT standard, vocabulary, and reference surface. It exists to define the category clearly, establish the core boundary model, and make the normative logic inspectable. It is not a full production-complete platform release and it is not a complete disclosure of internal implementation.
 
-This repository is a public KPT 2.3 standard surface: it contains the public standard layer together with selected tests, examples, and supporting public reference materials.
-
-Reading and discussion are public. Commercial use, official conformance claims, official status claims, certification claims, and controlled KPT name use are governed separately.
-
-Author: Kristjan Jõgi  
-Status: Public standard surface; not the full internal development state. The verification counts below apply only to the public materials included in this repository.
+Public availability does not by itself grant conformance status, certification, official adoption, or unrestricted name use. See the licensing and conformance materials for those boundaries.
 
 Verification counts for the current public reference-engine materials:
 - canonical v0.1: 8/8 passed
@@ -231,7 +219,8 @@ KPT-2.3/
     trace-schema.md
     basis-codes-registry.md
     conformance-methodology.md
-    suite-structure.md
+    appendix/
+      suite-structure.md
     weaponized-form-guidance.md
     reference-middleware-spec.md
     reference-middleware-pseudocode.md
